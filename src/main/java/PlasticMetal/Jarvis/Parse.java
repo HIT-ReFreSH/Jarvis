@@ -1,5 +1,7 @@
 package PlasticMetal.Jarvis;
 
+import PlasticMetal.Jarvis.ObjectModel.TryResult;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;

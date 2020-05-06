@@ -1,10 +1,10 @@
-package PlasticMetal.Jarvis;
+package PlasticMetal.Jarvis.ObjectModel;
 
 /**
  * represents a result of a JarvisTry
  * @param <T> Type of Try output
  */
-public class TryResult<T>
+public class TryResult<T> extends Tuple<Boolean,T>
 {
     public final T Out;
     public final boolean Result;
@@ -14,6 +14,7 @@ public class TryResult<T>
      * @param out the Try Result
      */
     public TryResult(T out){
+        super(true,out);
         Result=true;
         Out=out;
     }
@@ -22,6 +23,7 @@ public class TryResult<T>
      * the parse failed. Out=null.
      */
     public TryResult(){
+        super(false,null);
         Result=false;
         Out=null;
     }

@@ -3,10 +3,10 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
+    <name>Jarvis</name>
     <groupId>io.github.plastic-metal</groupId>
     <artifactId>Jarvis</artifactId>
-    <version>0.1</version>
+    <version>0.1.1</version>
 
     <packaging>jar</packaging>
     <organization>
@@ -23,7 +23,7 @@
         </developer>
     </developers>
     <description>Jarvis is a Light-weight Library contains very useful functions,
-        like NullCoalescing and TryParse for Java.</description>
+        like NullCoalescing and TryParse for Java. </description>
 
     <licenses>
         <license>
@@ -33,16 +33,6 @@
     </licenses>
     <build>
         <finalName>${project.organization.name}.${project.name}.${project.version}</finalName>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>8</source>
-                    <target>8</target>
-                </configuration>
-            </plugin>
-        </plugins>
         <defaultGoal>Package</defaultGoal>
         <pluginManagement>
             <plugins>
@@ -66,7 +56,7 @@
                     </configuration>
                     <executions>
                         <execution>
-                            <id>attach-javadocs</id>
+                            <id>attach-javadoc</id>
                             <goals>
                                 <goal>jar</goal>
                             </goals>
