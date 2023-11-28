@@ -1,15 +1,15 @@
-package PlasticMetal.Jarvis.ObjectModel;
+package ReFreSH.Jarvis.ObjectModel;
 
 import java.util.Objects;
 
 /**
  * represents a Triad. mutable.
+ *
  * @param <T1> type of the first item.
  * @param <T2> type of the second item.
  * @param <T3> type of the third item.
  */
-public class Triad<T1,T2,T3>
-{
+public class Triad<T1, T2, T3> {
     /**
      * First Item.
      */
@@ -25,19 +25,19 @@ public class Triad<T1,T2,T3>
 
     /**
      * Initialize a Triad with its items.
-     * @param first First Item.
+     *
+     * @param first  First Item.
      * @param second Second Item.
-     * @param third Third Item.
+     * @param third  Third Item.
      */
-    public Triad(T1 first, T2 second , T3 third){
-        First=first;
-        Second=second;
-        Third=third;
+    public Triad(T1 first, T2 second, T3 third) {
+        First = first;
+        Second = second;
+        Third = third;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "Triad {" + "First=" + First +
                 ", Second=" + Second +
                 ", Third=" + Third +
@@ -45,10 +45,11 @@ public class Triad<T1,T2,T3>
     }
 
     @Override
-    public boolean equals(Object o)
-    {
+    public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Triad<?, ?, ?>)){ return false;}
+        if (!(o instanceof Triad<?, ?, ?>)) {
+            return false;
+        }
         Triad<?, ?, ?> Triad = (Triad<?, ?, ?>) o;
         return First.equals(Triad.First) &&
                 Second.equals(Triad.Second) &&
@@ -56,8 +57,7 @@ public class Triad<T1,T2,T3>
     }
 
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         return Objects.hash(First, Second, Third);
     }
 }

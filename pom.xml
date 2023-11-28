@@ -1,29 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <name>Jarvis</name>
-    <groupId>io.github.plastic-metal</groupId>
+    <groupId>io.github.hit-refresh</groupId>
     <artifactId>Jarvis</artifactId>
-    <version>0.1.2</version>
+    <version>1.0.0</version>
 
     <packaging>jar</packaging>
     <organization>
-        <name>PlasticMetal</name>
-        <url>https://github.com/Plastic-Metal/</url>
+        <name>ReFreSH</name>
+        <url>https://github.com/HIT-ReFreSH/</url>
     </organization>
-    <url>https://github.com/Plastic-Metal/Jarvis</url>
+    <url>https://github.com/HIT-ReFreSH/Jarvis</url>
     <inceptionYear>2020</inceptionYear>
     <developers>
         <developer>
             <name>Ferdinand Sukhoi</name>
             <email>ferdinandsukhoi@outlook.com</email>
-            <url>ferdinandsukhoi.github.io</url>
+            <url>https://ferdinandsukhoi.github.io</url>
         </developer>
     </developers>
     <description>Jarvis is a Light-weight Library contains very useful functions,
-        like NullCoalescing and TryParse for Java. </description>
+        like NullCoalescing and TryParse for Java.
+    </description>
 
     <licenses>
         <license>
@@ -31,18 +32,27 @@
             <url>https://www.mit.edu/~amini/LICENSE.md</url>
         </license>
     </licenses>
+
     <build>
+
         <finalName>${project.organization.name}.${project.name}.${project.version}</finalName>
         <defaultGoal>Package</defaultGoal>
         <pluginManagement>
             <plugins>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.1</version>
+                    <artifactId>maven-resources-plugin</artifactId>
                     <configuration>
-                        <source>1.8</source>
-                        <target>1.8</target>
+                        <encoding>UTF-8</encoding>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.8.0</version>
+                    <configuration>
+                        <release>${java.version}</release>
+                        <encoding>${project.build.sourceEncoding}</encoding>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -56,7 +66,7 @@
                     </configuration>
                     <executions>
                         <execution>
-                            <id>attach-javadoc</id>
+                            <id>attach-javadocs</id>
                             <goals>
                                 <goal>jar</goal>
                             </goals>
@@ -80,28 +90,52 @@
 
             </plugins>
         </pluginManagement>
-
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>**/*.properties</include>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+        </resources>
     </build>
+
+
     <profiles>
         <profile>
             <id>release</id>
             <build>
                 <plugins>
+                    <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-resources-plugin -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <version>3.3.1</version>
+                        <configuration>
+                            <encoding>UTF-8</encoding>
+                        </configuration>
+                    </plugin>
+
+                    <!-- https://mvnrepository.com/artifact/org.sonatype.plugins/nexus-staging-maven-plugin -->
                     <plugin>
                         <groupId>org.sonatype.plugins</groupId>
                         <artifactId>nexus-staging-maven-plugin</artifactId>
-                        <version>1.6.3</version>
+                        <version>1.6.13</version>
                         <extensions>true</extensions>
                         <configuration>
-                            <serverId>oss</serverId>
+                            <serverId>nexus-releases</serverId>
                             <nexusUrl>https://oss.sonatype.org/</nexusUrl>
                             <autoReleaseAfterClose>true</autoReleaseAfterClose>
                         </configuration>
                     </plugin>
+
+                    <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-gpg-plugin -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
-                        <version>1.6</version>
+                        <version>3.1.0</version>
                         <executions>
                             <execution>
                                 <phase>verify</phase>
@@ -124,10 +158,11 @@
                             </execution>
                         </executions>
                     </plugin>
+                    <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-javadoc-plugin -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>3.0.0</version>
+                        <version>3.6.2</version>
                         <configuration>
                             <failOnError>false</failOnError>
                             <doclint>none</doclint>
@@ -141,26 +176,151 @@
                             </execution>
                         </executions>
                     </plugin>
+                    <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-release-plugin -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-release-plugin</artifactId>
-                        <version>3.0.0-M1</version>
+                        <version>3.0.1</version>
+
                         <configuration>
                             <tagNameFormat>v@{project.version}</tagNameFormat>
                             <autoVersionSubmodules>true</autoVersionSubmodules>
                         </configuration>
                     </plugin>
-                </plugins>
-            </build>
 
+
+                </plugins>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <filtering>true</filtering>
+                        <includes>
+                            <include>**/*.properties</include>
+                            <include>**/*.xml</include>
+                        </includes>
+                    </resource>
+                </resources>
+
+
+            </build>
             <distributionManagement>
                 <snapshotRepository>
-                    <id>oss</id>
+                    <id>nexus-snapshots</id>
                     <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
                 </snapshotRepository>
                 <repository>
-                    <id>oss</id>
+                    <id>nexus-releases</id>
                     <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+                </repository>
+            </distributionManagement>
+
+
+        </profile>
+        <profile>
+            <id>github</id>
+            <build>
+                <plugins>
+                    <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-resources-plugin -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <version>3.3.1</version>
+                        <configuration>
+                            <encoding>UTF-8</encoding>
+                        </configuration>
+                    </plugin>
+
+                    <!-- https://mvnrepository.com/artifact/org.sonatype.plugins/nexus-staging-maven-plugin -->
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <version>1.6.13</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <serverId>nexus-releases</serverId>
+                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                        </configuration>
+                    </plugin>
+
+                    <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-gpg-plugin -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>3.1.0</version>
+                        <executions>
+                            <execution>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>3.0.1</version>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-javadoc-plugin -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>3.6.2</version>
+                        <configuration>
+                            <failOnError>false</failOnError>
+                            <doclint>none</doclint>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-release-plugin -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-release-plugin</artifactId>
+                        <version>3.0.1</version>
+
+                        <configuration>
+                            <tagNameFormat>v@{project.version}</tagNameFormat>
+                            <autoVersionSubmodules>true</autoVersionSubmodules>
+                        </configuration>
+                    </plugin>
+
+
+                </plugins>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <filtering>true</filtering>
+                        <includes>
+                            <include>**/*.properties</include>
+                            <include>**/*.xml</include>
+                        </includes>
+                    </resource>
+                </resources>
+
+
+            </build>
+
+            <distributionManagement>
+                <repository>
+                    <id>github</id>
+                    <name>GitHub Plastic-Metal Apache Maven Packages</name>
+                    <url>https://maven.pkg.github.com/Plastic-Metal/JMobileSuitLite</url>
                 </repository>
             </distributionManagement>
 
@@ -168,9 +328,9 @@
         </profile>
     </profiles>
     <scm>
-        <url>https://github.com/Plastic-Metal/Jarvis</url>
-        <connection>scm:git:https://github.com/Plastic-Metal/Jarvis.git</connection>
-        <developerConnection>scm:git:https://github.com/Plastic-Metal/Jarvis.git</developerConnection>
+        <url>https://github.com/HIT-ReFreSH/Jarvis</url>
+        <connection>scm:git:https://github.com/HIT-ReFreSH/Jarvis.git</connection>
+        <developerConnection>scm:git:https://github.com/HIT-ReFreSH/Jarvis.git</developerConnection>
         <tag>${project.version}</tag>
     </scm>
 

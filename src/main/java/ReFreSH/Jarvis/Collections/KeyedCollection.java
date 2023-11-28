@@ -1,4 +1,4 @@
-package PlasticMetal.Jarvis.Collections;
+package ReFreSH.Jarvis.Collections;
 
 import java.util.*;
 import java.util.function.Consumer;
@@ -6,12 +6,10 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 @SuppressWarnings("unchecked")
-public abstract class KeyedCollection<K,I> implements Collection<I>
-{
+public abstract class KeyedCollection<K, I> implements Collection<I> {
+    private final Map<K, I> delegateMap = new HashMap<>();
+
     protected abstract K getKeyFromItem(I item);
-
-    private final Map<K,I> delegateMap=new HashMap<>();
-
 
     /**
      * Returns a {@link Set} view of the keys contained in this map.
@@ -28,8 +26,7 @@ public abstract class KeyedCollection<K,I> implements Collection<I>
      *
      * @return a set view of the keys contained in this map
      */
-    public Set<K> keySet()
-    {
+    public Set<K> keySet() {
         return delegateMap.keySet();
     }
 
@@ -49,8 +46,7 @@ public abstract class KeyedCollection<K,I> implements Collection<I>
      *
      * @return a set view of the mappings contained in this map
      */
-    public Set<Map.Entry<K, I>> entrySet()
-    {
+    public Set<Map.Entry<K, I>> entrySet() {
         return delegateMap.entrySet();
     }
 
@@ -74,9 +70,8 @@ public abstract class KeyedCollection<K,I> implements Collection<I>
      * concurrency properties.
      * @since 1.8
      */
-    public I getOrDefault(K key, I defaultValue)
-    {
-        return containsKey(key)?get(key):defaultValue;
+    public I getOrDefault(K key, I defaultValue) {
+        return containsKey(key) ? get(key) : defaultValue;
     }
 
     /**
@@ -105,8 +100,7 @@ public abstract class KeyedCollection<K,I> implements Collection<I>
      *                              (<a href="{@docRoot}/java/util/Collection.html#optional-restrictions">optional</a>)
      */
 
-    public I get(K key)
-    {
+    public I get(K key) {
         return delegateMap.get(key);
     }
 
@@ -148,10 +142,9 @@ public abstract class KeyedCollection<K,I> implements Collection<I>
      * concurrency properties.
      * @since 1.8
      */
-    public boolean replace(I newValue)
-    {
-        K key=getKeyFromItem(newValue);
-        if(!containsKey(key)) return false;
+    public boolean replace(I newValue) {
+        K key = getKeyFromItem(newValue);
+        if (!containsKey(key)) return false;
         removeAt(key);
         add(newValue);
         return true;
@@ -197,11 +190,10 @@ public abstract class KeyedCollection<K,I> implements Collection<I>
      * concurrency properties.
      * @since 1.8
      */
-    public I putIfAbsent(I value)
-    {
-        K key=getKeyFromItem(value);
-        I r=get(key);
-        if(!containsKey(key))add(value);
+    public I putIfAbsent(I value) {
+        K key = getKeyFromItem(value);
+        I r = get(key);
+        if (!containsKey(key)) add(value);
         return r;
     }
 
@@ -236,8 +228,7 @@ public abstract class KeyedCollection<K,I> implements Collection<I>
      *                                       map does not permit null keys
      *                                       (<a href="{@docRoot}/java/util/Collection.html#optional-restrictions">optional</a>)
      */
-    public I removeAt(K key)
-    {
+    public I removeAt(K key) {
         return delegateMap.remove(key);
     }
 
@@ -249,8 +240,7 @@ public abstract class KeyedCollection<K,I> implements Collection<I>
      * @return the number of elements in this collection
      */
     @Override
-    public int size()
-    {
+    public int size() {
         return delegateMap.size();
     }
 
@@ -260,8 +250,7 @@ public abstract class KeyedCollection<K,I> implements Collection<I>
      * @return <tt>true</tt> if this collection contains no elements
      */
     @Override
-    public boolean isEmpty()
-    {
+    public boolean isEmpty() {
         return false;
     }
 
@@ -282,9 +271,8 @@ public abstract class KeyedCollection<K,I> implements Collection<I>
      *                              (<a href="#optional-restrictions">optional</a>)
      */
     @Override
-    public boolean contains(Object o)
-    {
-        return delegateMap.containsKey(getKeyFromItem((I)o));
+    public boolean contains(Object o) {
+        return delegateMap.containsKey(getKeyFromItem((I) o));
     }
 
 
@@ -298,7 +286,7 @@ public abstract class KeyedCollection<K,I> implements Collection<I>
      * @return <tt>true</tt> if this collection contains the specified
      * element with given key
      */
-    public boolean containsKey(K key){
+    public boolean containsKey(K key) {
         return delegateMap.containsKey(key);
     }
 
@@ -311,8 +299,7 @@ public abstract class KeyedCollection<K,I> implements Collection<I>
      * @return an <tt>Iterator</tt> over the elements in this collection
      */
     @Override
-    public Iterator<I> iterator()
-    {
+    public Iterator<I> iterator() {
         return delegateMap.values().iterator();
     }
 
@@ -334,8 +321,7 @@ public abstract class KeyedCollection<K,I> implements Collection<I>
      * @since 1.8
      */
     @Override
-    public void forEach(Consumer<? super I> action)
-    {
+    public void forEach(Consumer<? super I> action) {
         delegateMap.values().forEach(action);
     }
 
@@ -356,8 +342,7 @@ public abstract class KeyedCollection<K,I> implements Collection<I>
      * @return an array containing all of the elements in this collection
      */
     @Override
-    public Object[] toArray()
-    {
+    public Object[] toArray() {
         return delegateMap.values().toArray();
     }
 
@@ -404,8 +389,7 @@ public abstract class KeyedCollection<K,I> implements Collection<I>
      * @throws NullPointerException if the specified array is null
      */
     @Override
-    public <T> T[] toArray(T[] a)
-    {
+    public <T> T[] toArray(T[] a) {
         return delegateMap.values().toArray(a);
     }
 
@@ -443,11 +427,10 @@ public abstract class KeyedCollection<K,I> implements Collection<I>
      *                                       time due to insertion restrictions
      */
     @Override
-    public boolean add(I v)
-    {
-        K key=getKeyFromItem(v);
-        if(delegateMap.containsKey(key))return false;
-        delegateMap.put(key,v);
+    public boolean add(I v) {
+        K key = getKeyFromItem(v);
+        if (delegateMap.containsKey(key)) return false;
+        delegateMap.put(key, v);
         return true;
     }
 
@@ -472,10 +455,9 @@ public abstract class KeyedCollection<K,I> implements Collection<I>
      *                                       is not supported by this collection
      */
     @Override
-    public boolean remove(Object o)
-    {
-        K key=getKeyFromItem((I) o);
-        if(!delegateMap.containsKey(key))return false;
+    public boolean remove(Object o) {
+        K key = getKeyFromItem((I) o);
+        if (!delegateMap.containsKey(key)) return false;
         delegateMap.remove(key);
         return true;
     }
@@ -499,12 +481,10 @@ public abstract class KeyedCollection<K,I> implements Collection<I>
      * @see #contains(Object)
      */
     @Override
-    public boolean containsAll(Collection<?> c)
-    {
-        for (Object o:
-             c)
-        {
-            if(!contains(o))return false;
+    public boolean containsAll(Collection<?> c) {
+        for (Object o :
+                c) {
+            if (!contains(o)) return false;
         }
 
 
@@ -536,16 +516,14 @@ public abstract class KeyedCollection<K,I> implements Collection<I>
      * @see #add(Object)
      */
     @Override
-    public boolean addAll(Collection<? extends I> c)
-    {
+    public boolean addAll(Collection<? extends I> c) {
 
-        for (I v:
-             c)
-        {
-            if(contains(v))return false;
+        for (I v :
+                c) {
+            if (contains(v)) return false;
         }
 
-        for(I v:c){
+        for (I v : c) {
             add(v);
         }
         return true;
@@ -575,15 +553,13 @@ public abstract class KeyedCollection<K,I> implements Collection<I>
      * @see #contains(Object)
      */
     @Override
-    public boolean removeAll(Collection<?> c)
-    {
-        for (Object v:
-                c)
-        {
-            if(contains(v))return false;
+    public boolean removeAll(Collection<?> c) {
+        for (Object v :
+                c) {
+            if (contains(v)) return false;
         }
 
-        for(Object v:c){
+        for (Object v : c) {
             remove(v);
         }
         return true;
@@ -610,14 +586,14 @@ public abstract class KeyedCollection<K,I> implements Collection<I>
      * @since 1.8
      */
     @Override
-    public boolean removeIf(Predicate<? super I> filter)
-    {
-        boolean flag=false;
-        for (I v:this
-             )
-        {
-            if(filter.test(v)){remove(v);
-            flag=true;}
+    public boolean removeIf(Predicate<? super I> filter) {
+        boolean flag = false;
+        for (I v : this
+        ) {
+            if (filter.test(v)) {
+                remove(v);
+                flag = true;
+            }
         }
         return flag;
     }
@@ -645,8 +621,7 @@ public abstract class KeyedCollection<K,I> implements Collection<I>
      * @see #contains(Object)
      */
     @Override
-    public boolean retainAll(Collection<?> c)
-    {
+    public boolean retainAll(Collection<?> c) {
         return removeIf(c::contains);
     }
 
@@ -658,8 +633,7 @@ public abstract class KeyedCollection<K,I> implements Collection<I>
      *                                       is not supported by this collection
      */
     @Override
-    public void clear()
-    {
+    public void clear() {
         delegateMap.clear();
     }
 
@@ -710,8 +684,7 @@ public abstract class KeyedCollection<K,I> implements Collection<I>
      * @since 1.8
      */
     @Override
-    public Spliterator<I> spliterator()
-    {
+    public Spliterator<I> spliterator() {
         return delegateMap.values().spliterator();
     }
 
@@ -729,8 +702,7 @@ public abstract class KeyedCollection<K,I> implements Collection<I>
      * @since 1.8
      */
     @Override
-    public Stream<I> stream()
-    {
+    public Stream<I> stream() {
         return delegateMap.values().stream();
     }
 
@@ -750,8 +722,7 @@ public abstract class KeyedCollection<K,I> implements Collection<I>
      * @since 1.8
      */
     @Override
-    public Stream<I> parallelStream()
-    {
+    public Stream<I> parallelStream() {
         return delegateMap.values().parallelStream();
     }
 }

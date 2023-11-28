@@ -1,4 +1,4 @@
-package PlasticMetal.Jarvis.ObjectModel;
+package ReFreSH.Jarvis.ObjectModel;
 
 import java.util.Objects;
 
@@ -6,8 +6,7 @@ import java.util.Objects;
 /**
  * a tuple
  */
-public class Tuple<T1,T2>
-{
+public class Tuple<T1, T2> {
     /**
      * First Item.
      */
@@ -20,17 +19,17 @@ public class Tuple<T1,T2>
 
     /**
      * Initialize a Traid with its items.
-     * @param first First Item.
+     *
+     * @param first  First Item.
      * @param second Second Item.
      */
-    public Tuple(T1 first, T2 second){
-        First=first;
-        Second=second;
+    public Tuple(T1 first, T2 second) {
+        First = first;
+        Second = second;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "Tuple {" + "First=" + First +
                 ", Second=" + Second +
 
@@ -38,18 +37,18 @@ public class Tuple<T1,T2>
     }
 
     @Override
-    public boolean equals(Object o)
-    {
+    public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Tuple<?, ?>)){ return false;}
+        if (!(o instanceof Tuple<?, ?>)) {
+            return false;
+        }
         Tuple<?, ?> Tuple = (Tuple<?, ?>) o;
         return First.equals(Tuple.First) &&
                 Second.equals(Tuple.Second);
     }
 
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         return Objects.hash(First, Second);
     }
 }
